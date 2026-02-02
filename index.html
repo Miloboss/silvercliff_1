@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boss Resort — Khao Sok Style Demo</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- AOS (scroll animations) -->
+  <link
+    href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    rel="stylesheet"
+  />
+
+  <!-- GLightbox (gallery lightbox) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Your styles -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="site-header">
+    <nav class="nav-wrap container">
+      <a class="brand" href="#top" aria-label="Boss Resort Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Boss Resort</span>
+          <span class="brand-sub">Khao Sok inspired</span>
+        </span>
+      </a>
+
+      <!-- Desktop Menu -->
+      <ul class="nav-links d-none d-lg-flex" aria-label="Primary navigation">
+        <li><a class="nav-link" href="#intro">Introduction</a></li>
+        <li><a class="nav-link" href="#products">Products</a></li>
+        <li><a class="nav-link" href="#info">Resort Info</a></li>
+        <li><a class="nav-link" href="#packages">Packages</a></li>
+        <li><a class="nav-link" href="#gallery">Gallery</a></li>
+        <li><a class="nav-link cta" href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="menu-btn d-lg-none"
+        id="menuBtn"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobileDrawer"
+      >
+        <!-- Animated SVG icon -->
+        <svg class="menu-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path class="line line1" d="M4 7h16" />
+          <path class="line line2" d="M4 12h16" />
+          <path class="line line3" d="M4 17h16" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="drawer" id="mobileDrawer" aria-hidden="true">
+      <div class="drawer-panel">
+        <div class="drawer-head">
+          <div class="drawer-brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <div>
+              <div class="drawer-title">Boss Resort</div>
+              <div class="drawer-sub">Menu</div>
+            </div>
+          </div>
+
+          <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
+        </div>
+
+        <ul class="drawer-links" aria-label="Mobile navigation">
+          <li><a href="#intro" class="drawer-link">1) Introduction</a></li>
+          <li><a href="#products" class="drawer-link">2) Products</a></li>
+          <li><a href="#info" class="drawer-link">3) Resort Info</a></li>
+          <li><a href="#packages" class="drawer-link">4) Packages</a></li>
+          <li><a href="#gallery" class="drawer-link">5) Gallery</a></li>
+          <li><a href="#contact" class="drawer-link drawer-cta">6) Contact Details</a></li>
+        </ul>
+
+        <div class="drawer-foot">
+          <a class="btn btn-danger w-100 fw-bold" href="#contact">Quick Contact</a>
+          <p class="drawer-note">Tip: Replace images/text easily in each section.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy" data-aos="fade-up">
+          <div class="hero-badges">
+            <span class="badge-pill">Free pickup</span>
+            <span class="badge-pill">Breakfast</span>
+            <span class="badge-pill">Lake view</span>
+            <span class="badge-pill">Fast reply</span>
+          </div>
+
+          <h1 class="hero-title">Explore Khao Sok vibes 🌿<br/>Stay like a local, relax like a resort.</h1>
+          <p class="hero-sub">
+            Mobile-first landing with clean sections, card grid, and strong CTAs.
+            Built for easy customization.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-danger btn-lg fw-bold" href="#packages">Explore Packages</a>
+            <a class="btn btn-outline-light btn-lg fw-bold" href="#gallery">View Gallery</a>
+          </div>
+
+          <div class="hero-mini">
+            <div class="mini-card">
+              <div class="mini-title">Location</div>
+              <div class="mini-value">Khao Sok / Cheow Lan vibe</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-title">Best for</div>
+              <div class="mini-value">Couples • Families • Friends</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-title">Booking</div>
+              <div class="mini-value">Line / WhatsApp / Call</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media" data-aos="zoom-in">
+          <div class="hero-frame">
+            <img
+              alt="Khao Sok style lake"
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80"
+            />
+          </div>
+          <div class="hero-frame small">
+            <img
+              alt="Jungle"
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1) Introduction -->
+    <section class="section" id="intro">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">1) Introduction</h2>
+          <p class="section-sub">
+            Short, clear story. One main CTA. This is where trust starts.
+          </p>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12 col-lg-7" data-aos="fade-up">
+            <div class="glass-card p-4">
+              <h3 class="h5 fw-bold mb-2">Thailand’s natural wonder experience</h3>
+              <p class="text-muted-soft mb-3">
+                Use this space to describe your resort: vibe, location, what makes it special.
+                Keep it skimmable on mobile.
+              </p>
+              <div class="feature-grid">
+                <div class="feature">
+                  <div class="feature-ico">🌄</div>
+                  <div>
+                    <div class="feature-title">Scenery</div>
+                    <div class="feature-sub">Limestone cliffs & lake view</div>
+                  </div>
+                </div>
+                <div class="feature">
+                  <div class="feature-ico">🛶</div>
+                  <div>
+                    <div class="feature-title">Activities</div>
+                    <div class="feature-sub">Boat, hike, jungle walk</div>
+                  </div>
+                </div>
+                <div class="feature">
+                  <div class="feature-ico">🏡</div>
+                  <div>
+                    <div class="feature-title">Stay</div>
+                    <div class="feature-sub">Private rooms & villas</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 d-flex gap-2 flex-wrap">
+                <a href="#contact" class="btn btn-danger fw-bold">Check Availability</a>
+                <a href="#info" class="btn btn-outline-light fw-bold">Resort Info</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-5" data-aos="fade-up" data-aos-delay="80">
+            <div class="img-card">
+              <img
+                alt="Cheow Lan lake"
+                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+              />
+              <div class="img-overlay">
+                <div class="img-overlay-title">Cheow Lan energy</div>
+                <div class="img-overlay-sub">Swap this with your resort hero photo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) Products -->
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">2) Products</h2>
+          <p class="section-sub">Rooms / Villas / Day pass — card grid like your screenshot.</p>
+        </div>
+
+        <div class="cards-grid" id="productGrid" data-aos="fade-up">
+          <!-- JS injects cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Resort Info -->
+    <section class="section" id="info">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">3) Resort Info</h2>
+          <p class="section-sub">Policies, amenities, location, check-in/out — quick bullets.</p>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12 col-lg-6" data-aos="fade-up">
+            <div class="glass-card p-4 h-100">
+              <h3 class="h6 fw-bold mb-3">Amenities</h3>
+              <ul class="info-list">
+                <li>✅ Breakfast included</li>
+                <li>✅ Free Wi-Fi</li>
+                <li>✅ Tour desk / local guide</li>
+                <li>✅ Scooter parking</li>
+                <li>✅ Pool / cafe (optional)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="80">
+            <div class="glass-card p-4 h-100">
+              <h3 class="h6 fw-bold mb-3">Check-in / Policy</h3>
+              <ul class="info-list">
+                <li>🕑 Check-in: 14:00</li>
+                <li>🕛 Check-out: 12:00</li>
+                <li>📌 ID required</li>
+                <li>💳 Pay: cash / transfer</li>
+                <li>❗ Free cancel: 24h before</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Packages -->
+    <section class="section" id="packages">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">4) Packages</h2>
+          <p class="section-sub">“Best offer” style packages + CTA buttons.</p>
+        </div>
+
+        <div class="row g-3" id="packageGrid" data-aos="fade-up">
+          <!-- JS injects packages -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Gallery -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">5) Gallery</h2>
+          <p class="section-sub">Tap images to open lightbox (GLightbox).</p>
+        </div>
+
+        <div class="gallery-grid" data-aos="fade-up" id="galleryGrid">
+          <!-- JS injects gallery items -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 6) Contact Details -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head" data-aos="fade-up">
+          <h2 class="section-title">6) Contact Details</h2>
+          <p class="section-sub">Clear contact cards + quick actions.</p>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12 col-lg-7" data-aos="fade-up">
+            <div class="glass-card p-4">
+              <h3 class="h6 fw-bold mb-3">Send inquiry</h3>
+              <div class="row g-2">
+                <div class="col-12 col-md-6">
+                  <input class="form-control form-dark" placeholder="Name" />
+                </div>
+                <div class="col-12 col-md-6">
+                  <input class="form-control form-dark" placeholder="Phone (Line/WhatsApp)" />
+                </div>
+                <div class="col-12 col-md-6">
+                  <input class="form-control form-dark" placeholder="Check-in (YYYY-MM-DD)" />
+                </div>
+                <div class="col-12 col-md-6">
+                  <input class="form-control form-dark" placeholder="Nights" />
+                </div>
+                <div class="col-12">
+                  <textarea class="form-control form-dark" rows="3" placeholder="Message"></textarea>
+                </div>
+                <div class="col-12 d-flex gap-2 flex-wrap mt-1">
+                  <button class="btn btn-danger fw-bold" id="fakeSend">Send</button>
+                  <a class="btn btn-outline-light fw-bold" href="#products">View Rooms</a>
+                </div>
+              </div>
+              <p class="small text-muted-soft mt-3 mb-0">
+                Demo only — connect to your backend / Line OA / WhatsApp later.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-5" data-aos="fade-up" data-aos-delay="80">
+            <div class="glass-card p-4 h-100">
+              <h3 class="h6 fw-bold mb-3">Quick contact</h3>
+
+              <div class="contact-card">
+                <div class="contact-ico">📞</div>
+                <div>
+                  <div class="contact-title">Phone</div>
+                  <div class="contact-sub">+66 XXX XXX XXX</div>
+                </div>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-ico">💬</div>
+                <div>
+                  <div class="contact-title">Line</div>
+                  <div class="contact-sub">@bossresort</div>
+                </div>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-ico">📍</div>
+                <div>
+                  <div class="contact-title">Location</div>
+                  <div class="contact-sub">Khao Sok, Surat Thani</div>
+                </div>
+              </div>
+
+              <div class="mt-3 d-grid gap-2">
+                <a class="btn btn-danger fw-bold" href="tel:+66000000000">Call now</a>
+                <a class="btn btn-outline-light fw-bold" href="#gallery">See photos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="container">
+            <div class="footer-inner">
+              <span>© <span id="year"></span> Boss Resort</span>
+              <span class="muted">Built with Bootstrap + AOS + GLightbox</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- GLightbox -->
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <!-- Your JS -->
+  <script src="./app.js"></script>
+</body>
+</html>
