@@ -1,24 +1,46 @@
 // ===== Init libs =====
 AOS.init({ duration: 650, once: true });
 
-// ===== Drawer / Menu =====
+// ===== DOM refs =====
 const menuBtn = document.getElementById("menuBtn");
 const drawer = document.getElementById("mobileDrawer");
 const drawerClose = document.getElementById("drawerClose");
+const progressBar = document.querySelector(".scroll-progress__bar");
+const navLinks = Array.from(
+  document.querySelectorAll(".nav-links .nav-link, .drawer-links .drawer-link")
+);
+const revealElements = Array.from(document.querySelectorAll(".reveal"));
+const sectionIds = ["#intro", "#products", "#info", "#packages", "#gallery", "#contact"];
+const sections = sectionIds
+  .map((id) => document.querySelector(id))
+  .filter(Boolean);
 
-function openDrawer(){
-  drawer.classList.add("open");
-  drawer.setAttribute("aria-hidden", "false");
-  menuBtn.classList.add("is-open");
-  menuBtn.setAttribute("aria-expanded", "true");
+function updateActiveLink(id) {
+  navLinks.forEach((link) => {
+    const isMatch = link.getAttribute("href") === id;
+    link.classList.toggle("active", isMatch);
+    if (isMatch) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+// ===== Drawer / Menu =====
+function openDrawer() {
+  drawer?.classList.add("open");
+  drawer?.setAttribute("aria-hidden", "false");
+  menuBtn?.classList.add("is-open");
+  menuBtn?.setAttribute("aria-expanded", "true");
   document.body.style.overflow = "hidden";
 }
 
-function closeDrawer(){
-  drawer.classList.remove("open");
-  drawer.setAttribute("aria-hidden", "true");
-  menuBtn.classList.remove("is-open");
-  menuBtn.setAttribute("aria-expanded", "false");
+function closeDrawer() {
+  drawer?.classList.remove("open");
+  drawer?.setAttribute("aria-hidden", "true");
+  menuBtn?.classList.remove("is-open");
+  menuBtn?.setAttribute("aria-expanded", "false");
   document.body.style.overflow = "";
 }
 
@@ -29,31 +51,30 @@ menuBtn?.addEventListener("click", () => {
 
 drawerClose?.addEventListener("click", closeDrawer);
 drawer?.addEventListener("click", (e) => {
-  if(e.target === drawer) closeDrawer();
+  if (e.target === drawer) closeDrawer();
 });
 
 document.addEventListener("keydown", (e) => {
-  if(e.key === "Escape") closeDrawer();
+  if (e.key === "Escape") closeDrawer();
 });
 
-// Close drawer on link click
-document.querySelectorAll(".drawer-link").forEach(a => {
+document.querySelectorAll(".drawer-link").forEach((a) => {
   a.addEventListener("click", () => closeDrawer());
 });
 
 // ===== Smooth scroll =====
-function smoothScrollTo(hash){
+function smoothScrollTo(hash) {
   const el = document.querySelector(hash);
-  if(!el) return;
+  if (!el) return;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener("click", (e) => {
     const href = a.getAttribute("href");
-    if(!href || href === "#") return;
+    if (!href || href === "#") return;
     const target = document.querySelector(href);
-    if(target){
+    if (target) {
       e.preventDefault();
       smoothScrollTo(href);
       history.replaceState(null, "", href);
@@ -61,25 +82,77 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ===== Active link highlight (desktop) =====
-const sections = ["#intro","#products","#info","#packages","#gallery","#contact"]
-  .map(id => document.querySelector(id))
-  .filter(Boolean);
+// ===== Scroll progress =====
+const updateScrollProgress = () => {
+  if (!progressBar) return;
+  const scrollEl = document.scrollingElement || document.documentElement;
+  const totalHeight = scrollEl.scrollHeight - window.innerHeight;
+  const progress = totalHeight > 0 ? scrollEl.scrollTop / totalHeight : 0;
+  progressBar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
+};
 
-const desktopLinks = Array.from(document.querySelectorAll(".nav-links .nav-link"));
-
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      const id = "#" + entry.target.id;
-      desktopLinks.forEach(link => {
-        link.classList.toggle("active", link.getAttribute("href") === id);
-      });
-    }
+let progressFrame;
+const requestProgressUpdate = () => {
+  if (progressFrame) return;
+  progressFrame = requestAnimationFrame(() => {
+    updateScrollProgress();
+    progressFrame = null;
   });
-}, { rootMargin: "-40% 0px -55% 0px", threshold: 0.01 });
+};
 
-sections.forEach(s => io.observe(s));
+window.addEventListener("scroll", requestProgressUpdate, { passive: true });
+window.addEventListener("resize", requestProgressUpdate, { passive: true });
+updateScrollProgress();
+
+// ===== Reveal animation =====
+if (revealElements.length) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2, rootMargin: "0px 0px -10px 0px" }
+  );
+
+  revealElements.forEach((el) => revealObserver.observe(el));
+}
+
+// ===== Section highlight =====
+if (sections.length) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          updateActiveLink(`#${entry.target.id}`);
+        }
+      });
+    },
+    { rootMargin: "-45% 0px -50% 0px", threshold: 0.25 }
+  );
+
+  sections.forEach((section) => sectionObserver.observe(section));
+  updateActiveLink(sectionIds[0]);
+}
+
+// ===== Button ripple =====
+document.addEventListener("pointerdown", (event) => {
+  const btn = event.target.closest(".btn");
+  if (!btn || btn.disabled) return;
+  const ripple = document.createElement("span");
+  ripple.className = "ripple";
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  ripple.style.width = `${size}px`;
+  ripple.style.height = `${size}px`;
+  ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+  ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+  btn.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+});
 
 // ===== Demo data (customize here easily) =====
 const products = [
@@ -89,7 +162,7 @@ const products = [
     title: "Lake View Villa",
     desc: "Private villa with sunrise view + breakfast included.",
     price: 4200,
-    img: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80"
+    img: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
   },
   {
     code: "BR-R2",
@@ -97,7 +170,7 @@ const products = [
     title: "Forest Room",
     desc: "Cozy stay surrounded by jungle vibes — quiet & clean.",
     price: 1800,
-    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80"
+    img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
   },
   {
     code: "BR-DAY",
@@ -105,7 +178,7 @@ const products = [
     title: "Day Pass (Pool + Cafe)",
     desc: "Pool access + cafe credit included. Great for locals/weekend.",
     price: 499,
-    img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+    img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
   },
   {
     code: "BR-VH",
@@ -113,8 +186,8 @@ const products = [
     title: "Honeymoon Villa",
     desc: "Romantic setup + private deck. Upgrade decor on request.",
     price: 5200,
-    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
-  }
+    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
+  },
 ];
 
 const packages = [
@@ -123,22 +196,22 @@ const packages = [
     title: "2 Days 1 Night — Lake Explorer",
     desc: "Boat cruise vibe + stay + easy schedule. Perfect for couples.",
     price: 2900,
-    img: "https://images.unsplash.com/photo-1501117716987-c8e1ecb210ff?auto=format&fit=crop&w=1200&q=80"
+    img: "https://images.unsplash.com/photo-1501117716987-c8e1ecb210ff?auto=format&fit=crop&w=1200&q=80",
   },
   {
     badge: "POPULAR",
     title: "3 Days 2 Nights — Jungle + Lake",
     desc: "Jungle walk + lake day + 2 nights stay. Balanced adventure & relax.",
     price: 4500,
-    img: "https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80"
+    img: "https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80",
   },
   {
     badge: "FAMILY",
     title: "Family Pack — Easy & Fun",
     desc: "Comfort stay + flexible activities + family-friendly timing.",
     price: 3800,
-    img: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80"
-  }
+    img: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80",
+  },
 ];
 
 const gallery = [
@@ -149,13 +222,13 @@ const gallery = [
   "https://images.unsplash.com/photo-1501117716987-c8e1ecb210ff?auto=format&fit=crop&w=1200&q=80",
   "https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80",
   "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
 ];
 
 // ===== Render helpers =====
 const money = (n) => new Intl.NumberFormat("th-TH").format(n);
 
-function productCard(p){
+function productCard(p) {
   return `
     <article class="cardx">
       <div class="cardx-media">
@@ -176,7 +249,7 @@ function productCard(p){
   `;
 }
 
-function packageCard(p){
+function packageCard(p) {
   return `
     <div class="col-12 col-lg-4">
       <div class="img-card">
@@ -198,27 +271,27 @@ function packageCard(p){
   `;
 }
 
-function galleryItem(url, i){
+function galleryItem(url, i) {
   return `
-    <a class="g-item glightbox" href="${url}" data-gallery="resort" data-title="Gallery ${i+1}">
-      <img src="${url}" alt="Gallery ${i+1}">
+    <a class="g-item glightbox" href="${url}" data-gallery="resort" data-title="Gallery ${i + 1}">
+      <img src="${url}" alt="Gallery ${i + 1}">
     </a>
   `;
 }
 
 // ===== Inject content =====
 const productGrid = document.getElementById("productGrid");
-if(productGrid){
+if (productGrid) {
   productGrid.innerHTML = products.map(productCard).join("");
 }
 
 const packageGrid = document.getElementById("packageGrid");
-if(packageGrid){
+if (packageGrid) {
   packageGrid.innerHTML = packages.map(packageCard).join("");
 }
 
 const galleryGrid = document.getElementById("galleryGrid");
-if(galleryGrid){
+if (galleryGrid) {
   galleryGrid.innerHTML = gallery.map(galleryItem).join("");
 }
 
