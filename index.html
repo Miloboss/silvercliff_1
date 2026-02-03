@@ -28,6 +28,9 @@
 </head>
 
 <body>
+  <div class="scroll-progress" aria-hidden="true">
+    <span class="scroll-progress__bar"></span>
+  </div>
   <!-- NAVBAR -->
   <header class="site-header">
     <nav class="nav-wrap container">
@@ -76,10 +79,11 @@
             <div>
               <div class="drawer-title">Boss Resort</div>
               <div class="drawer-sub">Menu</div>
+              
             </div>
           </div>
 
-          <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
+          <!-- <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button> -->
         </div>
 
         <ul class="drawer-links" aria-label="Mobile navigation">
@@ -101,7 +105,7 @@
 
   <!-- HERO -->
   <main id="top">
-    <section class="hero">
+    <section class="hero reveal" style="--d:0ms;">
       <div class="container hero-inner">
         <div class="hero-copy" data-aos="fade-up">
           <div class="hero-badges">
@@ -156,7 +160,7 @@
     </section>
 
     <!-- 1) Introduction -->
-    <section class="section" id="intro">
+    <section class="section reveal" id="intro" style="--d:80ms;">
       <div class="container">
         <div class="section-head" data-aos="fade-up">
           <h2 class="section-title">1) Introduction</h2>
@@ -228,14 +232,14 @@
           <p class="section-sub">Rooms / Villas / Day pass — card grid like your screenshot.</p>
         </div>
 
-        <div class="cards-grid" id="productGrid" data-aos="fade-up">
+        <div class="cards-grid reveal" id="productGrid" data-aos="fade-up" style="--d:90ms;">
           <!-- JS injects cards -->
         </div>
       </div>
     </section>
 
     <!-- 3) Resort Info -->
-    <section class="section" id="info">
+    <section class="section reveal" id="info" style="--d:120ms;">
       <div class="container">
         <div class="section-head" data-aos="fade-up">
           <h2 class="section-title">3) Resort Info</h2>
@@ -272,35 +276,35 @@
     </section>
 
     <!-- 4) Packages -->
-    <section class="section" id="packages">
+    <section class="section reveal" id="packages" style="--d:140ms;">
       <div class="container">
         <div class="section-head" data-aos="fade-up">
           <h2 class="section-title">4) Packages</h2>
           <p class="section-sub">“Best offer” style packages + CTA buttons.</p>
         </div>
 
-        <div class="row g-3" id="packageGrid" data-aos="fade-up">
+        <div class="row g-3 reveal" id="packageGrid" data-aos="fade-up" style="--d:150ms;">
           <!-- JS injects packages -->
         </div>
       </div>
     </section>
 
     <!-- 5) Gallery -->
-    <section class="section" id="gallery">
+    <section class="section reveal" id="gallery" style="--d:160ms;">
       <div class="container">
         <div class="section-head" data-aos="fade-up">
           <h2 class="section-title">5) Gallery</h2>
           <p class="section-sub">Tap images to open lightbox (GLightbox).</p>
         </div>
 
-        <div class="gallery-grid" data-aos="fade-up" id="galleryGrid">
+        <div class="gallery-grid reveal" data-aos="fade-up" id="galleryGrid" style="--d:170ms;">
           <!-- JS injects gallery items -->
         </div>
       </div>
     </section>
 
     <!-- 6) Contact Details -->
-    <section class="section" id="contact">
+    <section class="section reveal" id="contact" style="--d:180ms;">
       <div class="container">
         <div class="section-head" data-aos="fade-up">
           <h2 class="section-title">6) Contact Details</h2>
